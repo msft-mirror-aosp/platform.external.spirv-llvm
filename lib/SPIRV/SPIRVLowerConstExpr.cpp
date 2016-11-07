@@ -141,7 +141,7 @@ SPIRVLowerConstExpr::visit(Module *M) {
               SPIRVDBG(dbgs() << "[lowerConstantExpressions] Use: " <<
                   *U << '\n';)
               if (auto InstUser = dyn_cast<Instruction>(U)) {
-                if (InstUser->getParent()->getParent() != I)
+                if (InstUser->getParent()->getParent() != &(*I))
                   continue;
                 Users.push_back(InstUser);
               }

@@ -288,7 +288,7 @@ regularizeLLVM() {
 int
 main(int ac, char** av) {
   EnablePrettyStackTrace();
-  sys::PrintStackTraceOnErrorSignal();
+  sys::PrintStackTraceOnErrorSignal(av[0]);
   PrettyStackTraceProgram X(ac, av);
 
   cl::ParseCommandLineOptions(ac, av, "LLVM/SPIR-V translator");
