@@ -541,6 +541,7 @@ SPIRVModuleImpl::addEntry(SPIRVEntry *Entry) {
   }
   if (ValidateCapability) {
     for (auto &I:Entry->getRequiredCapability()) {
+      (void) I;
       assert(CapMap.count(I));
     }
   }
@@ -823,6 +824,7 @@ SPIRVModuleImpl::addDecorate(const SPIRVDecorateGeneric *Dec) {
   SPIRVId Id = Dec->getTargetId();
   SPIRVEntry *Target = nullptr;
   bool Found = exist(Id, &Target);
+  (void) Found;
   assert (Found && "Decorate target does not exist");
   if (!Dec->getOwner())
     DecorateSet.insert(Dec);
