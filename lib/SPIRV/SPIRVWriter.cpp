@@ -144,7 +144,7 @@ public:
         BM->addLine(BV, File, DL.getLine(), DL.getCol());
       }
     } else if (auto F = dyn_cast<Function>(V)) {
-      if (auto DIS = getDISubprogram(F)) {
+      if (auto DIS = F->getSubprogram()) {
         auto File = BM->getString(DIS->getFilename().str());
         BM->addLine(BV, File, DIS->getLine(), 0);
       }
@@ -530,6 +530,7 @@ LLVMToSPIRV::transType(Type *T) {
 
   if (T->isStructTy() && !T->isSized()) {
     auto ST = dyn_cast<StructType>(T);
+    (void) ST;
     assert(!ST->getName().startswith(kSPR2TypeName::Pipe));
     assert(!ST->getName().startswith(kSPR2TypeName::ImagePrefix));
     return mapType(T, BM->addOpaqueType(T->getStructName()));
@@ -1131,6 +1132,7 @@ bool
 LLVMToSPIRV::transBuiltinSet() {
   SPIRVWord Ver = 0;
   SourceLanguage Kind = BM->getSourceLanguage(&Ver);
+  (void) Kind;
   assert((Kind == SourceLanguageOpenCL_C ||
       Kind == SourceLanguageOpenCL_CPP ) && "not supported");
   std::stringstream SS;

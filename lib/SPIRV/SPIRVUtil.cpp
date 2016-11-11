@@ -905,7 +905,7 @@ getNamedMDAsStringSet(Module *M, const std::string &MDName) {
   NamedMDNode *NamedMD = M->getNamedMetadata(MDName);
   std::set<std::string> StrSet;
   if (!NamedMD)
-    return std::move(StrSet);
+    return StrSet;
 
   assert(NamedMD->getNumOperands() > 0 && "Invalid SPIR");
 
@@ -914,10 +914,10 @@ getNamedMDAsStringSet(Module *M, const std::string &MDName) {
     if (!MD || MD->getNumOperands() == 0)
       continue;
     for (unsigned J = 0, N = MD->getNumOperands(); J != N; ++J)
-      StrSet.insert(std::move(getMDOperandAsString(MD, J)));
+      StrSet.insert(getMDOperandAsString(MD, J));
   }
 
-  return std::move(StrSet);
+  return StrSet;
 }
 
 std::tuple<unsigned, unsigned, std::string>
@@ -1059,6 +1059,7 @@ transTypeDesc(Type *Ty, const BuiltinArgTypeMangleInfo &Info) {
     auto ET = Ty->getPointerElementType();
     SPIR::ParamType *EPT = nullptr;
     if (auto FT = dyn_cast<FunctionType>(ET)) {
+      (void) FT;
       assert(isVoidFuncTy(FT) && "Not supported");
       EPT = new SPIR::BlockType;
     } else if (auto StructTy = dyn_cast<StructType>(ET)) {
@@ -1133,8 +1134,10 @@ getScalarOrArray(Value *V, unsigned Size, Instruction *Pos) {
   auto P = GEP->getOperand(0);
   assert(P->getType()->getPointerElementType()->getArrayNumElements() == Size);
   auto Index0 = GEP->getOperand(1);
+  (void) Index0;
   assert(dyn_cast<ConstantInt>(Index0)->getZExtValue() == 0);
   auto Index1 = GEP->getOperand(2);
+  (void) Index1;
   assert(dyn_cast<ConstantInt>(Index1)->getZExtValue() == 0);
   return new LoadInst(P, "", Pos);
 }
@@ -1247,11 +1250,11 @@ getSPIRVImageSampledTypeName(SPIRVType *Ty) {
   case OpTypeVoid:
     return kSPIRVImageSampledTypeName::Void;
   case OpTypeInt:
-    if (Ty->getIntegerBitWidth() == 32)
+    if (Ty->getIntegerBitWidth() == 32) {
       if (static_cast<SPIRVTypeInt *>(Ty)->isSigned())
         return kSPIRVImageSampledTypeName::Int;
       else
-        return kSPIRVImageSampledTypeName::UInt;
+        return kSPIRVImageSampledTypeName::UInt; }
     break;
   case OpTypeFloat:
     switch(Ty->getFloatBitWidth()) {

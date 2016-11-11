@@ -125,7 +125,7 @@ SPIRVCapVec
 getCapability(K Key) {
   SPIRVCapVec V;
   SPIRVMap<K, SPIRVCapVec>::find(Key, &V);
-  return std::move(V);
+  return V;
 }
 
 #define ADD_VEC_INIT(Cap, ...)                                                 \
