@@ -192,7 +192,7 @@ public:
     std::string Path;
     splitFileName(File, BaseName, Path);
     Builder.createCompileUnit(dwarf::DW_LANG_C99,
-      BaseName, Path, "spirv", false, "", 0, "", DIBuilder::LineTablesOnly);
+      BaseName, Path, "spirv", false, "", 0, "", DICompileUnit::DebugEmissionKind::LineTablesOnly);
   }
 
   void addDbgInfoVersion() {
@@ -640,7 +640,7 @@ SPIRVToLLVM::transOCLImageTypeName(SPIRV::SPIRVTypeImage* ST) {
     + rmap<std::string>(ST->getDescriptor());
   if (SPIRVGenImgTypeAccQualPostfix)
     SPIRVToLLVM::insertImageNameAccessQualifier(ST, Name);
-  return std::move(Name);
+  return Name;
 }
 
 std::string
@@ -1446,8 +1446,10 @@ SPIRVToLLVM::transValueWithoutDecoration(SPIRVValue *BV, Function *F,
     auto AddrSpace = SPIRSPIRVAddrSpaceMap::rmap(BS);
     auto LVar = new GlobalVariable(*M, Ty, IsConst, LinkageTy, Initializer,
         BV->getName(), 0, GlobalVariable::NotThreadLocal, AddrSpace);
-    LVar->setUnnamedAddr(IsConst && Ty->isArrayTy() &&
-        Ty->getArrayElementType()->isIntegerTy(8));
+    LVar->setUnnamedAddr((IsConst && Ty->isArrayTy() &&
+                          Ty->getArrayElementType()->isIntegerTy(8)) ?
+                         GlobalValue::UnnamedAddr::Global :
+                         GlobalValue::UnnamedAddr::None);
     SPIRVBuiltinVariableKind BVKind;
     if (BVar->isBuiltin(&BVKind))
       BuiltinGVMap[LVar] = BVKind;
@@ -2346,6 +2348,7 @@ SPIRVToLLVM::transOCLBuiltinFromExtInst(SPIRVExtInst *BC, BasicBlock *BB) {
   std::string UnmangledName;
   auto BArgs = BC->getArguments();
 
+  (void) Set;
   assert (Set == SPIRVEIS_OpenCL && "Not OpenCL extended instruction");
   if (EntryPoint == OpenCLLIB::Printf)
     IsPrintf = true;
