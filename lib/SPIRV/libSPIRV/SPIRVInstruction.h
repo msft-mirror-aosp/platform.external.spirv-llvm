@@ -977,6 +977,7 @@ protected:
     SPIRVType *conTy = getValueType(Condition)->isTypeVector() ?
         getValueType(Condition)->getVectorComponentType() :
         getValueType(Condition);
+    (void) conTy;
     assert(conTy->isTypeBool() && "Invalid type");
     assert(getType() == getValueType(Op1) && getType() == getValueType(Op2) &&
         "Inconsistent type");
@@ -1059,8 +1060,10 @@ protected:
 
       assert(getType() == getValueType(Op)  &&
         "Inconsistent type");
+      (void) resTy;
       assert((resTy->isTypeInt() || resTy->isTypeFloat()) &&
         "Invalid type for Generic Negate instruction");
+      (void) opTy;
       assert((resTy->getBitWidth() == opTy->getBitWidth()) &&
         "Invalid bitwidth for Generic Negate instruction");
       assert((Type->isTypeVector() ? (Type->getVectorComponentCount() ==
@@ -1595,6 +1598,7 @@ protected:
       return;
     assert(getValueType(Vector1) == getValueType(Vector2));
     size_t CompCount = Type->getVectorComponentCount();
+    (void) CompCount;
     assert(Components.size() == CompCount);
     assert(Components.size() > 1);
   }

@@ -146,7 +146,7 @@ public:
       CV.push_back(CapabilityInt16);
     else if (isTypeInt(64))
       CV.push_back(CapabilityInt64);
-    return std::move(CV);
+    return CV;
   }
 
 protected:
@@ -177,7 +177,7 @@ public:
       CV.push_back(CapabilityFloat16);
     else if (isTypeFloat(64))
       CV.push_back(CapabilityFloat64);
-    return std::move(CV);
+    return CV;
   }
 
 
@@ -269,7 +269,7 @@ public:
     SPIRVCapVec V(getComponentType()->getRequiredCapability());
     if (CompCount >= 8)
       V.push_back(CapabilityVector16);
-    return std::move(V);
+    return V;
   }
 
   virtual std::vector<SPIRVEntry*> getNonLiteralOperands() const {
@@ -302,7 +302,7 @@ public:
   SPIRVType *getElementType() const { return ElemType;}
   SPIRVConstant *getLength() const;
   SPIRVCapVec getRequiredCapability() const {
-    return std::move(getElementType()->getRequiredCapability());
+    return getElementType()->getRequiredCapability();
   }
   virtual std::vector<SPIRVEntry*> getNonLiteralOperands() const {
     std::vector<SPIRVEntry*> Operands(2, ElemType);
