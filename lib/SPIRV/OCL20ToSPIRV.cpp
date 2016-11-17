@@ -1081,6 +1081,7 @@ OCL20ToSPIRV::visitCallGetImageSize(CallInst* CI,
   StringRef TyName;
   SmallVector<StringRef, 4> SubStrs;
   auto IsImg = isOCLImageType(CI->getArgOperand(0)->getType(), &TyName);
+  (void)IsImg;  // prevent warning about unused variable in NDEBUG build
   assert(IsImg);
   std::string ImageTyName = TyName.str();
   if (hasAccessQualifiedName(TyName))
