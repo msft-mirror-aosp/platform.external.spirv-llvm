@@ -587,6 +587,7 @@ LLVMToSPIRV::transSPIRVOpaqueType(Type *T) {
   auto ET = T->getPointerElementType();
   auto ST = cast<StructType>(ET);
   auto AddrSpc = T->getPointerAddressSpace();
+  (void)AddrSpc;  // prevent warning about unused variable in NDEBUG build
   auto STName = ST->getStructName();
   assert (STName.startswith(kSPIRVTypeName::PrefixAndDelim) &&
     "Invalid SPIR-V opaque type name");
@@ -1735,4 +1736,3 @@ llvm::RegularizeLLVMForSPIRV(Module *M, std::string &ErrMsg) {
   PassMgr.run(*M);
   return true;
 }
-

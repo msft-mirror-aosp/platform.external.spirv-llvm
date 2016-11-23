@@ -435,6 +435,11 @@ namespace SPIR {
   struct TypeVisitor{
     SPIRversion spirVer;
     TypeVisitor(SPIRversion ver) : spirVer(ver) {};
+
+    /// should usually have virtual destructor if there are any
+    /// virtual functions
+    virtual ~TypeVisitor() { }
+
     virtual MangleError visit(const PrimitiveType*)   = 0;
     virtual MangleError visit(const VectorType*)      = 0;
     virtual MangleError visit(const PointerType*)     = 0;
