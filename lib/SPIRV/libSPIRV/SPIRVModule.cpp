@@ -61,7 +61,7 @@ SPIRVModule::~SPIRVModule()
 
 class SPIRVModuleImpl : public SPIRVModule {
 public:
-  SPIRVModuleImpl():SPIRVModule(), NextId(1), BoolType(NULL),
+  SPIRVModuleImpl():SPIRVModule(), NextId(1),
     SPIRVVersion(SPIRV_1_0),
     GeneratorId(SPIRVGEN_KhronosLLVMSPIRVTranslator),
     GeneratorVer(0),
@@ -302,7 +302,6 @@ public:
 private:
   SPIRVErrorLog ErrLog;
   SPIRVId NextId;
-  SPIRVTypeInt *BoolType;
   SPIRVWord SPIRVVersion;
   unsigned short GeneratorId;
   unsigned short GeneratorVer;
@@ -1588,4 +1587,3 @@ bool ConvertSPIRV(std::string &Input, std::string &Out,
 #endif // _SPIRV_SUPPORT_TEXT_FMT
 
 }
-

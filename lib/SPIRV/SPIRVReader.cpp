@@ -139,6 +139,8 @@ getMDTwoInt(LLVMContext *Context, unsigned Int1, unsigned Int2) {
   return MDNode::get(*Context, ValueVec);
 }
 
+#if 0
+// this function is currently unneeded
 static MDNode*
 getMDString(LLVMContext *Context, const std::string& Str) {
   std::vector<Metadata*> ValueVec;
@@ -146,6 +148,7 @@ getMDString(LLVMContext *Context, const std::string& Str) {
     ValueVec.push_back(MDString::get(*Context, Str));
   return MDNode::get(*Context, ValueVec);
 }
+#endif
 
 static void
 addOCLVersionMetadata(LLVMContext *Context, Module *M,
@@ -1108,7 +1111,7 @@ SPIRVToLLVM::postProcessOCLBuiltinWithArrayArguments(Function* F,
       if (!T->isArrayTy())
         continue;
       auto Alloca = new AllocaInst(T, "", static_cast<Instruction*>(FBegin));
-      auto Store = new StoreInst(I, Alloca, false, CI);
+      new StoreInst(I, Alloca, false, CI);
       auto Zero = ConstantInt::getNullValue(Type::getInt32Ty(T->getContext()));
       Value *Index[] = {Zero, Zero};
       I = GetElementPtrInst::CreateInBounds(Alloca, Index, "", CI);
