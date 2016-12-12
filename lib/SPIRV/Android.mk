@@ -87,14 +87,15 @@ LOCAL_MODULE := libSPIRV
 
 # TODO: test windows build
 
-LOCAL_MODULE_HOST_OS := linux
+LOCAL_MODULE_HOST_OS := linux darwin
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 LOCAL_IS_HOST_MODULE := true
 LOCAL_MULTILIB := first
 
 LOCAL_LDLIBS_linux := -lrt -ldl -ltinfo -lpthread
+LOCAL_LDLIBS_darwin := -ldl -lpthread
 
-LOCAL_SHARED_LIBRARIES_linux += libLLVM
+LOCAL_SHARED_LIBRARIES += libLLVM
 
 LOCAL_CFLAGS += $(TOOL_CFLAGS) \
   -D_SPIRV_LLVM_API \

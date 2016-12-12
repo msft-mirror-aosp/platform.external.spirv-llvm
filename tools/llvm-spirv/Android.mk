@@ -49,12 +49,13 @@ LOCAL_MODULE_CLASS := EXECUTABLES
 
 # TODO: handle windows and darwin
 
-LOCAL_MODULE_HOST_OS := linux
+LOCAL_MODULE_HOST_OS := linux darwin
 LOCAL_IS_HOST_MODULE := true
 
 LOCAL_LDLIBS_linux := -lrt -ldl -ltinfo -lpthread
+LOCAL_LDLIBS_darwin := -ldl -lpthread
 
-LOCAL_SHARED_LIBRARIES_linux += libLLVM libSPIRV
+LOCAL_SHARED_LIBRARIES += libLLVM libSPIRV
 
 LOCAL_CFLAGS += $(TOOL_CFLAGS) \
   -D_SPIRV_LLVM_API \
