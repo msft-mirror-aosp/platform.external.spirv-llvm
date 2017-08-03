@@ -39,7 +39,7 @@ cc_binary {
     },
 
     shared_libs: [
-        "libLLVM",
+        "libLLVM_android",
         "libSPIRV",
     ],
 
