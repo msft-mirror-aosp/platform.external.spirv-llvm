@@ -75,19 +75,6 @@ cc_library_shared {
                 "-fno-exceptions",
             ],
         },
-        linux: {
-            host_ldlibs: [
-                "-lrt",
-                "-ldl",
-                "-lpthread",
-            ],
-        },
-        darwin: {
-            host_ldlibs: [
-                "-ldl",
-                "-lpthread",
-            ],
-        },
     },
 
     shared_libs: ["libLLVM"],
