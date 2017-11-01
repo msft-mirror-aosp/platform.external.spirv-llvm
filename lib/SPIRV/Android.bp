@@ -75,19 +75,6 @@ cc_library_shared {
                 "-fno-exceptions",
             ],
         },
-        linux: {
-            host_ldlibs: [
-                "-lrt",
-                "-ldl",
-                "-lpthread",
-            ],
-        },
-        darwin: {
-            host_ldlibs: [
-                "-ldl",
-                "-lpthread",
-            ],
-        },
     },
 
     shared_libs: ["libLLVM"],
@@ -99,6 +86,11 @@ cc_library_shared {
         "-Wall",
         "-Werror",
         "-Wno-unused-parameter",
+    ],
+
+    clang_cflags: [
+        // Temporarily suppress the warnings http://b/37867503
+        "-Wno-error=user-defined-warnings",
     ],
 
     product_variables: {
