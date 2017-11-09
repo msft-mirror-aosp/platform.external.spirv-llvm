@@ -77,7 +77,7 @@ cc_library_shared {
         },
     },
 
-    shared_libs: ["libLLVM"],
+    shared_libs: ["libLLVM_android"],
 
     cflags: [
         "-D_SPIRV_LLVM_API",
