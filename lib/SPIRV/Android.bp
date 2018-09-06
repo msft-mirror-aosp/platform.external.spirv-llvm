@@ -91,6 +91,8 @@ cc_library_shared {
     clang_cflags: [
         // Temporarily suppress the warnings http://b/37867503
         "-Wno-error=user-defined-warnings",
+        // SPIRVReader.cpp:1485 implicit fallthrough
+        "-Wno-implicit-fallthrough",
     ],
 
     product_variables: {
