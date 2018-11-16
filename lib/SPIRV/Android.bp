@@ -87,6 +87,7 @@ cc_library_shared {
         "-Werror",
         "-Wno-unused-parameter",
     ],
+    cpp_std: "gnu++11",
 
     clang_cflags: [
         // Temporarily suppress the warnings http://b/37867503
