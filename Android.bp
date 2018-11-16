@@ -1,4 +1,10 @@
+/*
+
+This project is being removed from the default manifest.
+
 subdirs = [
     "lib/SPIRV",
     "tools/llvm-spirv",
 ]
+
+*/
